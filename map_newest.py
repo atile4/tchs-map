@@ -1,10 +1,13 @@
 import pygame
 import sys
+import os
 
 
 # To do: organize button code into functions so code is more compact
 # User: Joyce Hu
 
+# working directory variable
+workingdir = os.getcwd()
 
 # Initialize Pygame
 pygame.init()
@@ -22,30 +25,30 @@ map = pygame.image.load('graphics/map_copy.png')
 
 
 # Load images of school
-rm_601_image = pygame.image.load('graphics/601.png')
-staff_lounge_image = pygame.image.load('graphics/staff_lounge.png')
-rm_216_image = pygame.image.load('graphics/214.png')
-rm_215_image = pygame.image.load('graphics/214.png')
-rm_214_image = pygame.image.load('graphics/214.png')
-RR_1_image = pygame.image.load('graphics/214.png')
-rm_116_image = pygame.image.load('graphics/116.png')
-rm_115_image = pygame.image.load('graphics/115.png')
-rm_114_image = pygame.image.load('graphics/114.png')
-RR_2_image = pygame.image.load('graphics/601.png')
-rm_213_image = pygame.image.load('graphics/213.png')
-rm_113_image = pygame.image.load('graphics/113.png')
-rm_108_image = pygame.image.load('graphics/108.png')
-rm_208_image = pygame.image.load('graphics/208.png')
-rm_212_image = pygame.image.load('graphics/601.png')
-rm_211_image = pygame.image.load('graphics/601.png')
-rm_210_image = pygame.image.load('graphics/601.png')
-rm_209_image = pygame.image.load('graphics/601.png')
-RR_3_image = pygame.image.load('graphics/601.png')
-rm_112_image = pygame.image.load('graphics/601.png')
-rm_111_image = pygame.image.load('graphics/601.png')
-rm_110_image = pygame.image.load('graphics/110.png')
-rm_109_image = pygame.image.load('graphics/601.png')
-RR_4_image = pygame.image.load('graphics/601.png')
+rm_601_image = pygame.image.load(workingdir +'/graphics/601.png')
+staff_lounge_image = pygame.image.load(workingdir + '/graphics/staff_lounge.png')
+rm_216_image = pygame.image.load(workingdir + '/graphics/214.png')
+rm_215_image = pygame.image.load(workingdir + '/graphics/214.png')
+rm_214_image = pygame.image.load(working + '/graphics/214.png')
+RR_1_image = pygame.image.load(workingdir + '/graphics/214.png')
+rm_116_image = pygame.image.load(workingdir + '/graphics/116.png')
+rm_115_image = pygame.image.load(workingdir + '/graphics/115.png')
+rm_114_image = pygame.image.load(workingdir + '/graphics/114.png')
+RR_2_image = pygame.image.load(workingdir + '/graphics/601.png')
+rm_213_image = pygame.image.load(workingdir + '/graphics/213.png')
+rm_113_image = pygame.image.load(workingdir + '/graphics/113.png')
+rm_108_image = pygame.image.load(workingdir + '/graphics/108.png')
+rm_208_image = pygame.image.load(workingdir + '/graphics/208.png')
+rm_212_image = pygame.image.load(workingdir + '/graphics/601.png')
+rm_211_image = pygame.image.load(workingdir + '/graphics/601.png')
+rm_210_image = pygame.image.load(workingdir + '/graphics/601.png')
+rm_209_image = pygame.image.load(workingdir + '/graphics/601.png')
+RR_3_image = pygame.image.load(workingdir + '/graphics/601.png')
+rm_112_image = pygame.image.load(workingdir + '/graphics/601.png')
+rm_111_image = pygame.image.load(workingdir + '/graphics/601.png')
+rm_110_image = pygame.image.load(workingdir + '/graphics/110.png')
+rm_109_image = pygame.image.load(workingdir + '/graphics/601.png')
+RR_4_image = pygame.image.load(workingdir + '/graphics/601.png')
 
 
 # Create current screen variable
