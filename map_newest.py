@@ -21,7 +21,7 @@ pygame.display.set_caption('TCHS Interactive Map')
 
 
 # Load map
-map = pygame.image.load('graphics/map_copy.png')
+map = pygame.image.load(workingdir + '/graphics/map_copy.png')
 
 
 # Load images of school
