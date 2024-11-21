@@ -1,12 +1,11 @@
 import pygame
 import sys
+import os
 
 pygame.init()
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((1240, 930))
 pygame.display.set_caption('TCHS Interactive Map')
-
-map_image = pygame.image.load('graphics/map_copy.png')
 
 image_paths = {
     'map': 'graphics/map_copy.png',
@@ -16,15 +15,12 @@ image_paths = {
     'rm_116': 'graphics/116.png',
     'rm_115': 'graphics/115.png',
     'rm_114': 'graphics/114.png',
-    'rm_116': 'graphics/116.png',
-    'rm_115': 'graphics/115.png',
-    'rm_114': 'graphics/114.png',
     'rm_110': 'graphics/110.png',
     'rm_108': 'graphics/108.png',
     'rm_208': 'graphics/208.png',
     'rm_113': 'graphics/113.png',
     'rm_213': 'graphics/213.png',
-    'rm_112': 'graphics/601.png',  
+    'rm_112': 'graphics/601.png',
     'rm_111': 'graphics/601.png',
     'rm_109': 'graphics/601.png',
     'gym': 'graphics/Front Entrance to Gym.png',
@@ -72,7 +68,7 @@ image_paths = {
     'mc4': 'graphics/601 Entrance.PNG',
     'principal_office': 'graphics/principal_s_office.png',
     'nurse': 'graphics/nurse_s_office.png',
-    'registrar': 'graphics/601.png',
+    'registrar': 'graphics/registrar.png',
     'conference_room': 'graphics/conference_room.png',
     'rm_311': 'graphics/311_staff_entrance.png',
     'attendance_office': 'graphics/attendance_office_inner_entrance.png',
@@ -85,7 +81,7 @@ image_paths = {
     'rm_305': 'graphics/rm_305.png',
     'rm_306': 'graphics/rm_306.png',
     'rm_307': 'graphics/rm_307.png',
-    'lunch': 'graphics/601.png',
+    'lunch': 'graphics/lunch.png',
     'rm_101': 'graphics/rm_101.png',
     'rm_102': 'graphics/rm_102.png',
     'rm_103': 'graphics/rm_103.png',
@@ -104,25 +100,21 @@ image_paths = {
     'rm_805': 'graphics/601.png',
     'locker': 'graphics/locker.png',
     'pool': 'graphics/pool.png',
+    'back': 'graphics/back.png'
 }
 
 images_cache = {}
-for key, path in image_paths.items():
-    try:
-        img = pygame.image.load(path).convert_alpha()
-        if key in [
-            'gym', 'tennis', 'rm_702', 'circle', 'rm_703', 'rm_704',
-            'rm_705', 'rm_706', 'rm_707', 'rm_708', 'rm_709', 'rm_801',
-            'rm_802', 'rr_1', 'weight', 'principal_office', 'nurse',
-            'registrar', 'conference_room', 'rm_311', 'attendance_office',
-            'rm_310', 'ccc', 'rm_304', 'rr_orange', 'rm_309', 'rm_308',
-            'rm_305', 'rm_306', 'rm_307', 'lunch'
-        ]:
-            img = pygame.transform.scale(img, (1240, 930))
-        images_cache[key] = img
-    except pygame.error as e:
-        print(f"Unable to load image at {path}: {e}")
-        images_cache[key] = None  
+essential_keys = ['map', 'back']
+for key in essential_keys:
+    path = image_paths.get(key)
+    if path and os.path.exists(path):
+        try:
+            img = pygame.image.load(path).convert_alpha()
+            images_cache[key] = img
+        except pygame.error:
+            images_cache[key] = None
+    else:
+        images_cache[key] = None
 
 font_sizes = [33, 25, 20, 15, 30, 16, 18, 27, 28]
 fonts_cache = {}
@@ -131,7 +123,8 @@ for size in font_sizes:
 
 buttons_info = [
     {'name': 'rm_601', 'image_key': 'rm_601', 'size': (50, 25), 'pos': (775, 400), 'text': '601', 'font_size': 33},
-    {'name': 'staff_lounge', 'image_key': 'staff_lounge', 'size': (115, 51), 'pos': (743, 268), 'text': 'Staff Lounge', 'font_size': 25},
+    {'name': 'staff_lounge', 'image_key': 'staff_lounge', 'size': (115, 51), 'pos': (743, 268), 'text': 'Staff Lounge',
+     'font_size': 25},
     {'name': 'rm_216', 'image_key': 'rm_214', 'size': (50, 25), 'pos': (847, 655), 'text': '216', 'font_size': 33},
     {'name': 'rm_215', 'image_key': 'rm_214', 'size': (50, 25), 'pos': (904, 655), 'text': '215', 'font_size': 33},
     {'name': 'rm_214', 'image_key': 'rm_214', 'size': (50, 25), 'pos': (960, 655), 'text': '214', 'font_size': 33},
@@ -154,7 +147,7 @@ buttons_info = [
     {'name': 'rm_110', 'image_key': 'rm_110', 'size': (50, 25), 'pos': (908, 773), 'text': '110', 'font_size': 33},
     {'name': 'rm_109', 'image_key': 'rm_601', 'size': (50, 25), 'pos': (963, 773), 'text': '109', 'font_size': 33},
     {'name': 'RR_4', 'image_key': 'rm_601', 'size': (50, 25), 'pos': (1020, 773), 'text': 'RR', 'font_size': 33},
-    
+
     {'name': 'RR_400', 'image_key': 'rm_601', 'size': (36, 10), 'pos': (1018, 395), 'text': 'RR', 'font_size': 20},
     {'name': 'rm_401', 'image_key': 'rm_401', 'size': (36, 44), 'pos': (1018, 410), 'text': '401', 'font_size': 30},
     {'name': 'rm_402', 'image_key': 'rm_402', 'size': (36, 44), 'pos': (1018, 320), 'text': '402', 'font_size': 30},
@@ -166,11 +159,12 @@ buttons_info = [
     {'name': 'rm_408', 'image_key': 'rm_408', 'size': (36, 44), 'pos': (1058, 410), 'text': '408', 'font_size': 30},
     {'name': 'rm_409', 'image_key': 'rm_409', 'size': (36, 44), 'pos': (1058, 467), 'text': '409', 'font_size': 30},
     {'name': 'rm_410', 'image_key': 'rm_410', 'size': (35, 44), 'pos': (1018, 467), 'text': '410', 'font_size': 30},
-    
+
     {'name': 'gym', 'image_key': 'gym', 'size': (70, 50), 'pos': (475, 414), 'text': 'Gym', 'font_size': 33},
     {'name': 'tennis', 'image_key': 'tennis', 'size': (39, 50), 'pos': (441, 292), 'text': 'Tennis', 'font_size': 15},
     {'name': 'rm_702', 'image_key': 'rm_702', 'size': (50, 25), 'pos': (499, 306), 'text': '702', 'font_size': 33},
-    {'name': 'circle', 'image_key': 'circle', 'size': (49, 33), 'pos': (645, 411), 'text': 'Sr. Circle', 'font_size': 15},
+    {'name': 'circle', 'image_key': 'circle', 'size': (49, 33), 'pos': (645, 411), 'text': 'Sr. Circle',
+     'font_size': 15},
     {'name': 'rm_703', 'image_key': 'rm_703', 'size': (48, 25), 'pos': (560, 309), 'text': '703', 'font_size': 33},
     {'name': 'rm_705', 'image_key': 'rm_705', 'size': (23, 25), 'pos': (639, 309), 'text': '705', 'font_size': 20},
     {'name': 'rm_704', 'image_key': 'rm_704', 'size': (23, 25), 'pos': (611, 309), 'text': '704', 'font_size': 20},
@@ -182,54 +176,65 @@ buttons_info = [
     {'name': 'rm_802', 'image_key': 'rm_802', 'size': (22, 25), 'pos': (572, 429), 'text': '802', 'font_size': 20},
     {'name': 'rr_1', 'image_key': 'rr_1', 'size': (21, 25), 'pos': (666, 243), 'text': 'RR', 'font_size': 20},
     {'name': 'weight', 'image_key': 'weight', 'size': (30, 20), 'pos': (505, 180), 'text': 'Image', 'font_size': 15},
-    
+
     {'name': 'rm_501', 'image_key': 'rm_501', 'size': (35, 25), 'pos': (1098, 429), 'text': '501', 'font_size': 30},
     {'name': 'rm_502', 'image_key': 'rm_502', 'size': (37, 25), 'pos': (1097, 397), 'text': '502', 'font_size': 30},
-    {'name': 'rm_503', 'image_key': 'rm_503', 'size': (37, 25), 'pos': (1097.7, 345), 'text': '503', 'font_size': 30},
-    {'name': 'rm_504', 'image_key': 'rm_504', 'size': (37, 25), 'pos': (1097.7, 317), 'text': '504', 'font_size': 30},
-    {'name': 'rm_505', 'image_key': 'rm_505', 'size': (36, 25), 'pos': (1098.3, 284), 'text': '505', 'font_size': 30},
-    {'name': 'rm_506', 'image_key': 'rm_506', 'size': (35, 25), 'pos': (1097.5, 248), 'text': '506', 'font_size': 30},
-    {'name': 'rm_507', 'image_key': 'rm_507', 'size': (35, 25), 'pos': (1097.5, 210), 'text': '507', 'font_size': 30},
+    {'name': 'rm_503', 'image_key': 'rm_503', 'size': (37, 25), 'pos': (1097, 345), 'text': '503', 'font_size': 30},
+    {'name': 'rm_504', 'image_key': 'rm_504', 'size': (37, 25), 'pos': (1097, 317), 'text': '504', 'font_size': 30},
+    {'name': 'rm_505', 'image_key': 'rm_505', 'size': (36, 25), 'pos': (1098, 284), 'text': '505', 'font_size': 30},
+    {'name': 'rm_506', 'image_key': 'rm_506', 'size': (35, 25), 'pos': (1097, 248), 'text': '506', 'font_size': 30},
+    {'name': 'rm_507', 'image_key': 'rm_507', 'size': (35, 25), 'pos': (1097, 210), 'text': '507', 'font_size': 30},
     {'name': 'rm_508', 'image_key': 'rm_508', 'size': (38, 25), 'pos': (1137, 210), 'text': '508', 'font_size': 30},
-    {'name': 'rm_509', 'image_key': 'rm_509', 'size': (38.5, 25), 'pos': (1137, 248), 'text': '509', 'font_size': 30},
+    {'name': 'rm_509', 'image_key': 'rm_509', 'size': (38, 25), 'pos': (1137, 248), 'text': '509', 'font_size': 30},
     {'name': 'rm_510', 'image_key': 'rm_510', 'size': (35, 25), 'pos': (1137, 284), 'text': '510', 'font_size': 30},
     {'name': 'rm_511', 'image_key': 'rm_511', 'size': (35, 25), 'pos': (1138, 317), 'text': '511', 'font_size': 30},
-    {'name': 'rm_512', 'image_key': 'rm_512', 'size': (35, 25), 'pos': (1137, 345.7), 'text': '512', 'font_size': 30},
-    {'name': 'rm_514', 'image_key': 'rm_514', 'size': (35, 25), 'pos': (1137, 397.5), 'text': '514', 'font_size': 30},
+    {'name': 'rm_512', 'image_key': 'rm_512', 'size': (35, 25), 'pos': (1137, 345), 'text': '512', 'font_size': 30},
+    {'name': 'rm_514', 'image_key': 'rm_514', 'size': (35, 25), 'pos': (1137, 397), 'text': '514', 'font_size': 30},
     {'name': 'rm_515', 'image_key': 'rm_515', 'size': (35, 25), 'pos': (1137, 429), 'text': '515', 'font_size': 30},
     {'name': 'rm_516', 'image_key': 'rm_516', 'size': (35, 25), 'pos': (1137, 478), 'text': '516', 'font_size': 30},
     {'name': 'rm_517', 'image_key': 'rm_517', 'size': (35, 25), 'pos': (1098, 478), 'text': '517', 'font_size': 30},
-    {'name': 'rr_yellow', 'image_key': 'rr_yellow', 'size': (35, 10.5), 'pos': (1098, 372), 'text': 'RR', 'font_size': 20},
-    
+    {'name': 'rr_yellow', 'image_key': 'rr_yellow', 'size': (35, 10), 'pos': (1098, 372), 'text': 'RR',
+     'font_size': 20},
+
     {'name': 'rm_905', 'image_key': 'rm_905', 'size': (50, 25), 'pos': (420, 561), 'text': '905', 'font_size': 33},
     {'name': 'rm_904', 'image_key': 'rm_904', 'size': (50, 25), 'pos': (500, 561), 'text': '904', 'font_size': 33},
-    {'name': 'tennis_courts', 'image_key': 'tennis_courts', 'size': (120, 25), 'pos': (162, 775), 'text': 'Tennis Courts', 'font_size': 25},
-    {'name': 'lemon_parking_lot', 'image_key': 'lemon_parking_lot', 'size': (124, 50), 'pos': (290, 760), 'text': 'Lemon Parking Lot', 'font_size': 16},
+    {'name': 'tennis_courts', 'image_key': 'tennis_courts', 'size': (120, 25), 'pos': (162, 775),
+     'text': 'Tennis Courts', 'font_size': 25},
+    {'name': 'lemon_parking_lot', 'image_key': 'lemon_parking_lot', 'size': (124, 50), 'pos': (290, 760),
+     'text': 'Lemon Parking Lot', 'font_size': 16},
     {'name': 'lawn', 'image_key': 'lawn', 'size': (70, 35), 'pos': (470, 750), 'text': 'Lawn', 'font_size': 33},
-    {'name': 'media_center', 'image_key': 'media_center', 'size': (120, 25), 'pos': (600, 805), 'text': 'Media Center', 'font_size': 25},
-    {'name': 'senate_room', 'image_key': 'senate_room', 'size': (80, 25), 'pos': (643, 675), 'text': 'Senate Room', 'font_size': 16},
+    {'name': 'media_center', 'image_key': 'media_center', 'size': (120, 25), 'pos': (600, 805), 'text': 'Media Center',
+     'font_size': 25},
+    {'name': 'senate_room', 'image_key': 'senate_room', 'size': (80, 25), 'pos': (643, 675), 'text': 'Senate Room',
+     'font_size': 16},
     {'name': 'mc1', 'image_key': 'mc1', 'size': (40, 25), 'pos': (600, 736), 'text': 'MC1', 'font_size': 25},
     {'name': 'mc2', 'image_key': 'mc2', 'size': (40, 25), 'pos': (600, 712), 'text': 'MC2', 'font_size': 25},
     {'name': 'mc3', 'image_key': 'mc3', 'size': (40, 25), 'pos': (600, 687), 'text': 'MC3', 'font_size': 25},
     {'name': 'mc4', 'image_key': 'mc4', 'size': (40, 25), 'pos': (600, 663), 'text': 'MC4', 'font_size': 25},
-    
-    {'name': 'principal_office', 'image_key': 'principal_office', 'size': (50, 25), 'pos': (694, 545), 'text': "Principal's Office", 'font_size': 13},
-    {'name': 'conf', 'image_key': 'conference_room', 'size': (43, 35), 'pos': (694, 585), 'text': 'Conf. Room', 'font_size': 13},
+
+    {'name': 'principal_office', 'image_key': 'principal_office', 'size': (50, 25), 'pos': (694, 545),
+     'text': "Principal's Office", 'font_size': 13},
+    {'name': 'conf', 'image_key': 'conference_room', 'size': (43, 35), 'pos': (694, 585), 'text': 'Conf. Room',
+     'font_size': 13},
     {'name': 'nurse', 'image_key': 'nurse', 'size': (36, 24), 'pos': (779, 517), 'text': 'Nurse', 'font_size': 28},
-    {'name': 'registrar', 'image_key': 'registrar', 'size': (38, 24), 'pos': (818, 517), 'text': 'Registrar', 'font_size': 28},
+    {'name': 'registrar', 'image_key': 'registrar', 'size': (38, 24), 'pos': (818, 517), 'text': 'Registrar',
+     'font_size': 28},
     {'name': 'rm_311', 'image_key': 'rm_311', 'size': (40, 35), 'pos': (876, 545), 'text': '311', 'font_size': 30},
-    {'name': 'attendance', 'image_key': 'attendance_office', 'size': (40, 35), 'pos': (876, 585), 'text': 'Attendance', 'font_size': 13},
+    {'name': 'attendance', 'image_key': 'attendance_office', 'size': (40, 35), 'pos': (876, 585), 'text': 'Attendance',
+     'font_size': 13},
     {'name': 'rm_310', 'image_key': 'rm_310', 'size': (60, 35), 'pos': (960, 545), 'text': '310', 'font_size': 30},
-    {'name': 'ccc', 'image_key': 'ccc', 'size': (100, 35), 'pos': (923, 585), 'text': 'Counseling/College & Career', 'font_size': 20},
+    {'name': 'ccc', 'image_key': 'ccc', 'size': (100, 35), 'pos': (923, 585), 'text': 'Counseling/College & Career',
+     'font_size': 20},
     {'name': 'rm_304', 'image_key': 'rm_304', 'size': (27, 25), 'pos': (1031, 590), 'text': '304', 'font_size': 20},
-    {'name': 'rr_orange', 'image_key': 'rr_orange', 'size': (16, 40), 'pos': (1062, 565), 'text': 'RR', 'font_size': 20},
+    {'name': 'rr_orange', 'image_key': 'rr_orange', 'size': (16, 40), 'pos': (1062, 565), 'text': 'RR',
+     'font_size': 20},
     {'name': 'rm_309', 'image_key': 'rm_309', 'size': (30, 25), 'pos': (1105, 551), 'text': '309', 'font_size': 20},
     {'name': 'rm_308', 'image_key': 'rm_308', 'size': (30, 25), 'pos': (1152, 551), 'text': '308', 'font_size': 20},
     {'name': 'rm_305', 'image_key': 'rm_305', 'size': (30, 25), 'pos': (1105, 590), 'text': '305', 'font_size': 20},
     {'name': 'rm_306', 'image_key': 'rm_306', 'size': (25, 25), 'pos': (1143, 590), 'text': '306', 'font_size': 18},
     {'name': 'rm_307', 'image_key': 'rm_307', 'size': (25, 25), 'pos': (1170, 590), 'text': '307', 'font_size': 18},
     {'name': 'lunch', 'image_key': 'lunch', 'size': (65, 30), 'pos': (910, 299), 'text': 'Lunch', 'font_size': 27},
-    
+
     {'name': 'pool', 'image_key': 'pool', 'size': (50, 25), 'pos': (300, 450), 'text': 'Pool', 'font_size': 33},
     {'name': 'rm_804', 'image_key': 'rm_804', 'size': (50, 25), 'pos': (385, 415), 'text': '804', 'font_size': 33},
     {'name': 'rm_805', 'image_key': 'rm_805', 'size': (50, 25), 'pos': (385, 485), 'text': '805', 'font_size': 33},
@@ -248,13 +253,14 @@ buttons_info = [
     {'name': 'rm_103', 'image_key': 'rm_103', 'size': (50, 25), 'pos': (1018, 857), 'text': '103', 'font_size': 33},
     {'name': 'rm_102', 'image_key': 'rm_102', 'size': (50, 25), 'pos': (1072, 857), 'text': '102', 'font_size': 33},
     {'name': 'rm_101', 'image_key': 'rm_101', 'size': (50, 25), 'pos': (1130, 857), 'text': '101', 'font_size': 33},
-        {'name': 'back', 'image_key': 'back', 'size': (100, 50), 'pos': (30, 20), 'text': 'Back', 'font_size': 33},
+    {'name': 'back', 'image_key': 'back', 'size': (100, 50), 'pos': (30, 20), 'text': 'Back', 'font_size': 33},
 ]
+
 
 class Button:
     def __init__(self, info):
         self.name = info['name']
-        self.image = images_cache.get(info['image_key'])
+        self.image_key = info['image_key']
         self.size = info['size']
         self.pos = info['pos']
         self.text = info['text']
@@ -263,57 +269,79 @@ class Button:
         self.rect = pygame.Rect(self.pos, self.size)
         self.text_surface = self.font.render(self.text, True, (0, 0, 0))
         self.text_rect = self.text_surface.get_rect(center=(self.size[0] / 2, self.size[1] / 2))
-    
+        self.active = True
+
     def draw(self, screen):
+        if not self.active:
+            return
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos):
             pygame.draw.rect(self.surface, (127, 255, 212), self.surface.get_rect())
         else:
             pygame.draw.rect(self.surface, (255, 255, 255), self.surface.get_rect())
-        
-
         self.surface.blit(self.text_surface, self.text_rect)
-        
         screen.blit(self.surface, self.pos)
-    
+
     def is_clicked(self, event_pos):
-        return self.rect.collidepoint(event_pos)
+        return self.active and self.rect.collidepoint(event_pos)
+
 
 buttons = [Button(info) for info in buttons_info]
-
-current_screen = map_image
-
+back_button = next((button for button in buttons if button.name == 'back'), None)
+current_screen = images_cache.get('map')
 running = True
+
 while running:
-    clock.tick(60)  
-    
+    clock.tick(60)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             break
-        
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            for button in buttons:
-                if button.is_clicked(event.pos):
-                    if button.name == 'back':
-                        current_screen = map_image
-                    else:
-                        current_screen = button.image
-                    break
-    
+            if current_screen == images_cache.get('map'):
+                for button in buttons:
+                    if button.is_clicked(event.pos):
+                        if button.name != 'back':
+                            if button.image_key not in images_cache:
+                                path = image_paths.get(button.image_key)
+                                if path and os.path.exists(path):
+                                    try:
+                                        img = pygame.image.load(path).convert_alpha()
+                                        if button.image_key in [
+                                            'gym', 'tennis', 'rm_702', 'circle', 'rm_703', 'rm_704',
+                                            'rm_705', 'rm_706', 'rm_707', 'rm_708', 'rm_709', 'rm_801',
+                                            'rm_802', 'rr_1', 'weight', 'principal_office', 'nurse',
+                                            'registrar', 'conference_room', 'rm_311', 'attendance_office',
+                                            'rm_310', 'ccc', 'rm_304', 'rr_orange', 'rm_309', 'rm_308',
+                                            'rm_305', 'rm_306', 'rm_307', 'lunch'
+                                        ]:
+                                            img = pygame.transform.scale(img, (1240, 930))
+                                        images_cache[button.image_key] = img
+                                    except pygame.error:
+                                        images_cache[button.image_key] = None
+                                else:
+                                    images_cache[button.image_key] = None
+                            if images_cache.get(button.image_key):
+                                current_screen = images_cache.get(button.image_key)
+                            break
+            else:
+                if back_button and back_button.is_clicked(event.pos):
+                    current_screen = images_cache.get('map')
+
     screen.fill((155, 255, 155))
-    
-    screen.blit(current_screen, (0, 0))
-    
-    if current_screen == map_image:
+    if current_screen:
+        screen.blit(current_screen, (0, 0))
+    if current_screen == images_cache.get('map'):
         for button in buttons:
+            button.active = True
             button.draw(screen)
     else:
         for button in buttons:
             if button.name == 'back':
+                button.active = True
                 button.draw(screen)
-                break
-    
+            else:
+                button.active = False
     pygame.display.flip()
 
 pygame.quit()
