@@ -1656,3 +1656,4 @@ while True:
 
  # Update the game state
  pygame.display.update()
+
